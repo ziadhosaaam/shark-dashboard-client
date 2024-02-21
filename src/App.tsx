@@ -9,7 +9,8 @@ import { CalendarIcon, ChartPieIcon, ClipboardDocumentCheckIcon, CreditCardIcon,
 
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-import dataProvider from "@refinedev/airtable";
+import { dataProvider } from "@refinedev/supabase";
+import { supabaseClient } from "../src/utility/supabaseClient";
 import routerBindings, {
   CatchAllNavigate,
   DocumentTitleHandler,
@@ -18,8 +19,9 @@ import routerBindings, {
 } from "@refinedev/react-router-v6";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { authProvider } from "./authProvider";
+import  authProvider  from "./authProvider";
 import { Layout } from "./components/layout";
+
 import {
   BlogPostCreate,
   BlogPostEdit,
@@ -43,20 +45,18 @@ import {
   CategoryList,
   CategoryShow,
 } from "./pages/categories";
-import { ForgotPassword } from "./pages/forgotPassword";
-import { Login } from "./pages/login";
-import { Register } from "./pages/register";
 
-function App() {
-  const API_TOKEN = "keyI18pnBeEMfPAIb";
-  const BASE_ID = "appKYl1H4k9g73sBT";
+import { ForgotPassword } from "./pages/forgotPassword";
+import  AuthPage from "./pages/login";
+
+const App: React.FC = () => {
 
   return (
     <BrowserRouter>
       <RefineKbarProvider>
         <DevtoolsProvider>
           <Refine
-            dataProvider={dataProvider(API_TOKEN, BASE_ID)}
+            dataProvider={dataProvider(supabaseClient)}
             routerProvider={routerBindings}
             authProvider={authProvider}
             resources={[
@@ -160,10 +160,10 @@ function App() {
                   </Authenticated>
                 }
               >
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-              </Route>
+              <Route path="/login" element={<AuthPage type="login" />} />
+              <Route path="/register" element={<AuthPage type="register" />} />
+              <Route path="/forgot-password" element={<AuthPage type="updatePassword" />} />
+            </Route>
             </Routes>
 
             <RefineKbar />

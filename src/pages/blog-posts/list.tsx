@@ -6,6 +6,7 @@ import {
 } from "@refinedev/core";
 import { useTable } from "@refinedev/react-table";
 import { ColumnDef, flexRender } from "@tanstack/react-table";
+import { IPost, ICategory } from "../../interfaces";
 import React from "react";
 
 export const BlogPostList: React.FC<IResourceComponentsProps> = () => {
