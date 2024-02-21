@@ -1,12 +1,14 @@
 import {
   Authenticated,
   ErrorComponent,
-  GitHubBanner,
   Refine,
 } from "@refinedev/core";
+import { Disclosure } from '@headlessui/react';
+import { ChevronRightIcon, MegaphoneIcon } from '@heroicons/react/20/solid';
+import { CalendarIcon, ChartPieIcon, ClipboardDocumentCheckIcon, CreditCardIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UserCircleIcon, UsersIcon } from '@heroicons/react/24/outline';
+
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-
 import dataProvider from "@refinedev/airtable";
 import routerBindings, {
   CatchAllNavigate,
@@ -25,6 +27,17 @@ import {
   BlogPostShow,
 } from "./pages/blog-posts";
 import {
+  Home,
+  Campaigns,
+  Reviewers,
+  Payments,
+  Reports,
+  Products,
+  Profile,
+  productDetails,
+}
+from "./pages"
+import {
   CategoryCreate,
   CategoryEdit,
   CategoryList,
@@ -40,7 +53,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <DevtoolsProvider>
           <Refine
@@ -48,27 +60,51 @@ function App() {
             routerProvider={routerBindings}
             authProvider={authProvider}
             resources={[
-              {
-                name: "blog_posts",
-                list: "/blog-posts",
-                create: "/blog-posts/create",
-                edit: "/blog-posts/edit/:id",
-                show: "/blog-posts/show/:id",
+               {
+                name: "Dashboard",
+                list: "/home",
                 meta: {
-                  canDelete: true,
-                },
+                  icon: <HomeIcon />,
+                  label: "Dashboard"
+                }
               },
               {
-                name: "categories",
-                list: "/categories",
-                create: "/categories/create",
-                edit: "/categories/edit/:id",
-                show: "/categories/show/:id",
+                name: "Campaigns",
+                list: "/campaigns",
                 meta: {
-                  canDelete: true,
-                },
+                  icon: <MegaphoneIcon />
+                }
               },
-            ]}
+              {
+                name: "Reviewers",
+                list: "/reviewers",
+                meta: {
+                  icon: <DocumentDuplicateIcon />
+                }
+              },
+              {
+                name: "Payments",
+                list: "/payments",
+                meta: {
+                  icon: <CreditCardIcon />
+                }
+              },
+              {
+                name: "Reports",
+                list: "/reports", 
+                meta: {
+                  icon: <ChartPieIcon />
+                }
+              },
+              {
+                name: "Profile",
+                list: "/profile", 
+                meta: {
+                  icon: <UserCircleIcon />,
+                  label: "Profile"
+                }              
+              }
+           ]}
             options={{
               syncWithLocation: true,
               warnWhenUnsavedChanges: true,
@@ -76,6 +112,7 @@ function App() {
               projectId: "F9Sg75-lHqVc2-CqPQz9",
             }}
           >
+            
             <Routes>
               <Route
                 element={
@@ -91,16 +128,22 @@ function App() {
               >
                 <Route
                   index
-                  element={<NavigateToResource resource="blog_posts" />}
+                  element={<NavigateToResource resource="home" />}
                 />
-                <Route path="/blog-posts">
-                  <Route index element={<BlogPostList />} />
+                <Route path="/home">
+                  <Route index element={<Home />} />
                   <Route path="create" element={<BlogPostCreate />} />
                   <Route path="edit/:id" element={<BlogPostEdit />} />
                   <Route path="show/:id" element={<BlogPostShow />} />
                 </Route>
-                <Route path="/categories">
-                  <Route index element={<CategoryList />} />
+                <Route path="/reviewers">
+                  <Route index element={<Reviewers />} />
+                  <Route path="create" element={<CategoryCreate />} />
+                  <Route path="edit/:id" element={<CategoryEdit />} />
+                  <Route path="show/:id" element={<CategoryShow />} />
+                </Route>
+                <Route path="/campaigns">
+                  <Route index element={<Campaigns />} />
                   <Route path="create" element={<CategoryCreate />} />
                   <Route path="edit/:id" element={<CategoryEdit />} />
                   <Route path="show/:id" element={<CategoryShow />} />

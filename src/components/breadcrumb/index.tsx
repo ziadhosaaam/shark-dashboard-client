@@ -6,11 +6,14 @@ export const Breadcrumb = () => {
 
   return (
     <ul className="breadcrumb">
-      {breadcrumbs.map((breadcrumb) => {
+      {breadcrumbs.map((breadcrumb, index) => {
         return (
-          <li key={`breadcrumb-${breadcrumb.label}`}>
+          <li key={`${breadcrumb.label}`}>
             {breadcrumb.href ? (
-              <Link to={breadcrumb.href}>{breadcrumb.label}</Link>
+              <>
+                {index > 0 && <span className="separator">/</span>}
+                <Link to={breadcrumb.href}>{breadcrumb.label}</Link>
+              </>
             ) : (
               <span>{breadcrumb.label}</span>
             )}

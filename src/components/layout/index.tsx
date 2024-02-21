@@ -1,14 +1,13 @@
 import { PropsWithChildren } from "react";
 import { Breadcrumb } from "../breadcrumb";
-import { Menu } from "../menu";
+import Sidebar from '../sidebar';
 
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="layout">
-      <Menu />
-      <div className="content">
-        <Breadcrumb />
-        <div>{children}</div>
+    <div className="flex flex-row layout">
+      <Sidebar />
+      <div className="flex flex-col w-full ml-64">
+        <div className="p-4">{children}</div>
       </div>
     </div>
   );
