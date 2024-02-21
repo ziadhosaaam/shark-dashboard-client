@@ -50,9 +50,10 @@ const products = [
     // More products...
   ]
   
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+  function classNames(...classes: (string | undefined)[]) {
+    return classes.filter(Boolean).join(' ');
   }
+
   
   export default function ProgressOrders() {
     return (

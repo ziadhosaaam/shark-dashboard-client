@@ -9,7 +9,7 @@ function Sidebar() {
   const { menuItems, selectedKey } = useMenu();
   const { mutate: logout } = useLogout();
 
-  function classNames(...classes) {
+  function classNames(...classes: (string | undefined)[]) {
     return classes.filter(Boolean).join(' ');
   }
 
@@ -38,7 +38,7 @@ function Sidebar() {
                       <li key={item.key}>
                         {/* Use Link instead of anchor tag for navigation */}
                         <Link
-                          to={item.route} // Use 'to' prop instead of 'href'
+                          to={item.route || '#'} // Providing a default value '#' if item.route is undefined
                           className={classNames(
                             item.key === selectedKey
                               ? 'bg-gray-800 text-white'
